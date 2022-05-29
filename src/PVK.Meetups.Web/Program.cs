@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PVK.Meetups.Web.Data;
+using PVK.Meetups.Web.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options => {
 });
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("LocalPostgresConnection");
+var connectionString = builder.Configuration.GetConnectionString("LocalPostgresConnection") ?? throw new InvalidOperationException("Connection string 'LocalPostgresConnection' not found.");
 builder.Services.AddDbContext<PVKMeetupsDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
