@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PVK.Meetups.Web", "PVK.Meetups.Web\PVK.Meetups.Web.csproj", "{F67A42B4-C2A8-4065-895F-99DF5C28B21A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F67A42B4-C2A8-4065-895F-99DF5C28B21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F67A42B4-C2A8-4065-895F-99DF5C28B21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F67A42B4-C2A8-4065-895F-99DF5C28B21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F67A42B4-C2A8-4065-895F-99DF5C28B21A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DF28C44-1AD6-4D16-9A6B-E8099151AD00}
+	EndGlobalSection
+EndGlobal

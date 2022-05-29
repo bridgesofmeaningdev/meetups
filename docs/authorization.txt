@@ -1,0 +1,115 @@
+
+
+Hyper-V VM
+---------------------------
+bridgesofmeaning-vm
+bom-pc
+
+## Local Account Info
+User: bomdeveloper
+Password: kermitthefrog
+
+Postgres Server & Database
+--------------------
+## postgres server account info
+user: postgres / pgadmin
+password: kermitthefrog
+port:5432
+
+postgres setup steps:
+* create database PvkMeetupDb
+Name: PvkMeetupDb
+Encoding: UTF8
+Tablespace: pg_default
+Collation: C
+Character Type: C
+---------------------
+CREATE DATABASE "PvkMeetupDb"
+    WITH
+    OWNER = postgres
+    TEMPLATE = template0
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'C'
+    LC_CTYPE = 'C'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+---------------------------
+
+* create user 
+User: sapvkmigrations w/ comment "Service Account for PVK database migrations. Full CRUD access, full DDL access"
+Password: updatesfordays
+Can Login: yes
+Superuser: yes
+create roles: yes
+create databases: yes
+Inherit rights: yes
+initiate streaming backups: yes
+----------------------
+CREATE ROLE sapvkmigrations WITH
+	LOGIN
+	SUPERUSER
+	CREATEDB
+	CREATEROLE
+	INHERIT
+	REPLICATION
+	CONNECTION LIMIT -1
+	PASSWORD 'xxxxxx';
+----------------------
+* set permissions for sapvkmigrations
+-------------
+GRANT ALL ON DATABASE "PvkMeetupDb" TO sapvkmigrations WITH GRANT OPTION;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT ALL ON TABLES TO sapvkmigrations WITH GRANT OPTION;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT ALL ON SEQUENCES TO sapvkmigrations WITH GRANT OPTION;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT EXECUTE ON FUNCTIONS TO sapvkmigrations WITH GRANT OPTION;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT USAGE ON TYPES TO sapvkmigrations;
+------------
+
+* create user sapvkmeetups
+User: sapvkmeetups
+Comment: Service Account for PVK Meetups App. Full CRUD access, no DDL access
+Password: estuaryfacilitation
+Can Login: Yes
+Inherit Rights: Yes
+Streaming Backup: yes
+all others no
+-----------
+CREATE ROLE sapvkmeetups WITH
+	LOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	REPLICATION
+	CONNECTION LIMIT -1
+	PASSWORD 'xxxxxx';
+COMMENT ON ROLE sapvkmeetups IS 'Service Account for PVK Meetups App. Full CRUD access, no DDL access';
+-----------
+
+* set permissions for sapvkmeetups
+-------------
+
+GRANT CONNECT, TEMPORARY ON DATABASE "PvkMeetupDb" TO sapvkmeetups;
+
+SET ROLE sapvkmigrations;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT ALL ON SEQUENCES TO sapvkmeetups;
+
+
+Google Single Sign-On
+-------------------------------
+
+
+
+

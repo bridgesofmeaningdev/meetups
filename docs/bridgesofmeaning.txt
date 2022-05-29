@@ -1,0 +1,86 @@
+
+
+
+
+https://www.google.com/maps/d/edit?mid=19VPF5YYrwf2EFDfBU4upDXyyVySRzO-t&ll=24.88632535909228%2C-103.54334363063117&z=4
+
+Requirement 1.01: ability for BOM members to self identify as wanting to participate in a community group. Part of that process to include required contact and/or demographic information to segment into logical groups.  Required and optional data elements TBD. 
+Requirement 1.02: database to hold data captured in 1.01. 
+Requirement 1.03: ability to query database to segment population into one or more groups.  This requires the database to be flexible enough to allow each person to be part of multiple groups
+Requirement 1.04: ability to send email to one, several, or all groups.
+Requirement 1.05: tool to assist with planning events.  Could be calendar or other event planning tool.
+
+
+@everyone crowd sourcing the server for some volunteers/expert input
+The world has moved forward to the point where IN PERSON meetups are possible again, and needed more than ever.
+Our original tool "buckos in space" was a decent start, but does not contain good tools for organizing and contacting the people that registered on the map. 
+Eventually we will need local hosts, but right now I'm trying to find people that have some expertise in Online organization tools. If you'd like to volunteer, please respond with one of the numbers below
+
+
+
+Questions
+* voicechat meetups schedules?
+
+
+
+No MFA set up for the gmail account
+user: bridgesofmeaningdev@gmail.com
+pass: apocalypseof1337john
+github: https://github.com/bridgesofmeaningdev/meetups
+
+# Vision
+
+A system that will assist Bridges of Meaning (BOM) Discord server members to self-organize non-recurring in-person meetups.
+
+# Personae
+
+* BOM Members (a.k.a Members)
+* Organizers (a subset of Members)
+* Administrators (a subset of Members)
+* System
+
+# Business Requirements
+
+1. We want the solution to service all BOM Members, regardless of their country of residence.
+1. We want to protect the privacy of all BOM Members.
+1. We want the solution to comply with all relevant legal codes in the jurisdictions from which it can be used.
+1. We want the solution to be easy for non-technically inclined BOM Members to learn and use.
+1. We want the solution to allow any Member to create or attend any meetup near them.
+1. We want the solution to allow reasonable communication to Members interested in meetups.
+
+1. We do not want the solution to notify members when a meetup near them has been created.
+
+# Functional Requirements
+
+1. Ability for BOM Members to see meetups on a topic or topics happening within X kilometers/miles of their location and Y days in the future.
+1. Ability for BOM Members to indicate interest in a meetup.
+1. Ability for BOM Members to cancel interest in a meetup.
+1. Ability for BOM Members to remove their information from the solution.
+1. Ability for BOM Members to become Organizers by scheduling a non-recurring meetup on a topic on a date and time at a location.
+
+1. Ability for Organizers to reschedule a meetup that they have created.
+1. Ability for Organizers to cancel a meetup that they have created.
+1. Ability for Organizers to change the location of a meetup that they have created.
+1. Ability for Organizers to change the topic or topics of a meetup that they have created.
+
+1. Ability for Administrators to perform all Organizer actions for all meetups.
+1. Ability for Administrators to transfer ownership of a meetup from one Organizer to another Organizer or BOM Member.
+1. Ability for Administrators to request removal of member information from the solution.
+1. Ability for Administrators to remove other Members information, but not their own, from the solution. Where this requirement conflicts with another, this requirement takes precedence.
+
+1. Ability for the System to communicate meetup changes to all interested BOM Members.
+
+
+# Non-Functional Requirements
+
+1. Adhere to GDPR requirements for PII data. https://gdpr.eu/eu-gdpr-personal-data/ . (BOM has European members, and more US States are adobting GDPR-like requirements)
+1. Maximum load is 100 concurrent users and 5000 registered users.
+1. 95% of server requests returned in less than 1 second at 70% load
+
+
+Entity Relationship Diagram
+
+
+
+
+
