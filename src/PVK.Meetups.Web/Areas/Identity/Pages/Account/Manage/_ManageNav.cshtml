@@ -1,4 +1,5 @@
-@inject SignInManager<IdentityUser> SignInManager
+@using PVK.Meetups.Web.Data
+@inject SignInManager<PVKMeetupsUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
