@@ -36,7 +36,8 @@ namespace PVK.Meetups.Web.Areas.Identity.Pages.Account
             IUserStore<PVKMeetupsUser> userStore,
             SignInManager<PVKMeetupsUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            FeatureFlags flags)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +45,7 @@ namespace PVK.Meetups.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            Features = flags;
         }
 
         /// <summary>
@@ -52,6 +54,8 @@ namespace PVK.Meetups.Web.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
+
+        public FeatureFlags Features { get; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

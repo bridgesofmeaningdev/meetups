@@ -23,10 +23,13 @@ namespace PVK.Meetups.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<PVKMeetupsUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<PVKMeetupsUser> signInManager, ILogger<LoginModel> logger)
+        public FeatureFlags Features { get; }
+
+        public LoginModel(SignInManager<PVKMeetupsUser> signInManager, ILogger<LoginModel> logger, FeatureFlags flags)
         {
             _signInManager = signInManager;
             _logger = logger;
+            Features = flags;
         }
 
         /// <summary>
