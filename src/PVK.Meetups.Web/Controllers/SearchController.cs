@@ -4,7 +4,6 @@ using PVK.Meetups.Web.Models;
 
 namespace PVK.Meetups.Web.Controllers
 {
-    [Route("search")]
     public class SearchController : Controller
     {
         private readonly ILogger<SearchController> _logger;
