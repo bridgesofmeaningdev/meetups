@@ -19,6 +19,9 @@ var connectionString = builder.Configuration.GetConnectionString("LocalPostgresC
 builder.Services.AddDbContext<PVKMeetupsDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddScoped<PVKMeetupsDbContext>();
+builder.Services.AddScoped<ISearchRepository, SearchRepository>();
+
 if (features.EnableWeakPasswords)
 {
     builder.Services.AddDefaultIdentity<PVKMeetupsUser>(options =>

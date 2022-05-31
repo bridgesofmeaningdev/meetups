@@ -15,7 +15,7 @@ namespace PVK.Meetups.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new SearchInputModel());
         }
 
         public IActionResult Privacy()

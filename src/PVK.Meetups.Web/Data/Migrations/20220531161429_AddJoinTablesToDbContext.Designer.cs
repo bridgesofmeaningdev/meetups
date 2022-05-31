@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PVK.Meetups.Web.Data;
@@ -11,9 +12,10 @@ using PVK.Meetups.Web.Data;
 namespace PVK.Meetups.Web.Migrations
 {
     [DbContext(typeof(PVKMeetupsDbContext))]
-    partial class PVKMeetupsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220531161429_AddJoinTablesToDbContext")]
+    partial class AddJoinTablesToDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,7 +204,7 @@ namespace PVK.Meetups.Web.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("character varying(2048)");
 
-                    b.Property<DateTime>("EndDateTimeUtc")
+                    b.Property<DateTime>("EndDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LocationDescription")
@@ -218,7 +220,7 @@ namespace PVK.Meetups.Web.Migrations
                     b.Property<int>("OwningMeetupGroupId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("StartDateTimeUtc")
+                    b.Property<DateTime>("StartDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");

@@ -16,8 +16,9 @@ namespace PVK.Meetups.Web.Data
             base.OnModelCreating(builder);
 
 
-            builder.Entity<MeetupGroup>().HasMany(g => g.Events).WithOne(e => e.OwningMeetupGroup);
+            builder.Entity<MeetupGroup>().HasMany(g => g.Events).WithOne(e => e.OwningMeetupGroup).HasForeignKey(nameof(MeetupGroupEvent.OwningMeetupGroupId));
 
+            
             builder.Entity<MeetupGroupMember>().HasKey(m => new { m.GroupId, m.MemberId });
             builder.Entity<MeetupGroupMember>().HasOne(m => m.Group).WithMany(g => g.Members).HasForeignKey(m => m.GroupId);
             builder.Entity<MeetupGroupMember>().HasOne(m => m.Member).WithMany(u => u.GroupMemberships).HasForeignKey(m => m.MemberId);

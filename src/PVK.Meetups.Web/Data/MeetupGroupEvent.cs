@@ -16,14 +16,14 @@ namespace PVK.Meetups.Web.Data
         [StringLength(256)]
         public string LocationDescription { get; set; }
 
-        public DateTime StartDateTime { get; set; }
+        public DateTime StartDateTimeUtc { get; set; }
 
-        public DateTime EndDateTime { get; set; }
+        public DateTime EndDateTimeUtc { get; set; }
+
+        public int OwningMeetupGroupId { get; set; }
 
         public MeetupGroup OwningMeetupGroup { get; set; }
 
-        [NotMapped]
-        public MeetupGroupEventAttendee PrimaryHost { get; set; }
 
         public ICollection<MeetupGroupEventAttendee> Attendees { get; set; }
 

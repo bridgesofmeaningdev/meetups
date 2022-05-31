@@ -1,8 +1,30 @@
-﻿@{
+﻿@model SearchInputModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Converzations are in-person meetups with a goal to have every person's story told, understood, and acknowledged.</p>
+</div>
+
+<div class="col-md-4">
+    <section>
+        @using (Html.BeginForm("FindNearbyMeetups", "Search", FormMethod.Get)) {
+        
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Topics" class="form-control" />
+                <label asp-for="Topics" class="form-label" >Search for "peterson"</label>
+                </div>
+                <div class="form-floating">
+                <input asp-for="Location" class="form-control" />
+                <label asp-for="Location" class="form-label">Neighborhood or City or Zip</label>
+            </div>
+            <div>
+                <button id="search-submit" type="submit" class="w-100 btn btn-lg btn-primary">Search</button>
+            </div>
+        }
+    </section>
 </div>
