@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +10,7 @@ using PVK.Meetups.Web.Models;
 
 namespace PVK.Meetups.Web.Controllers
 {
+    [Route("groups/{groupId:int}/events/{action}/{id:int?}")]
     public class MeetupGroupEventsController : Controller
     {
         //TODO use repository instead of context directly
@@ -21,15 +22,20 @@ namespace PVK.Meetups.Web.Controllers
         }
 
         // GET: MeetupGroupEvents
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int groupId)
         {
             if (_context.MeetupGroups == null)
                 Problem("Entity set 'PVKMeetupsDbContext.MeetupGroupEvents'  is null.");
 
 
-            var items = await _context.MeetupGroupEvents.ToListAsync();
-            return View(items.Select(i => new MeetupGroupEventModel(i)).ToList());
+            var items = await _context.MeetupGroupEvents.Where(e =>e.OwningMeetupGroupId == groupId).ToListAsync();
+            var model = new MeetupGroupEventListModel
+            {
+                OwningMeetupGroupId = groupId,
+                Events = items.Select(i => new MeetupGroupEventModel(i)).ToList()
+            };
 
+            return View(model);
         }
 
         // GET: MeetupGroupEvents/Details/5
@@ -51,9 +57,9 @@ namespace PVK.Meetups.Web.Controllers
         }
 
         // GET: MeetupGroupEvents/Create
-        public IActionResult Create()
+        public IActionResult Create(int groupId)
         {
-            return View();
+            return View(new MeetupGroupEventModel {  OwningMeetupGroupId = groupId });
         }
 
         // POST: MeetupGroupEvents/Create
@@ -63,10 +69,13 @@ namespace PVK.Meetups.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MeetupGroupEventModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || model.OwningMeetupGroupId == null)
                 return View(model);
 
             var dbItem = model.ToEvent();
+            var owningGroup = await _context.MeetupGroups.FindAsync(model.OwningMeetupGroupId.Value);
+            if (owningGroup == null)
+                return View(model); // TODO need a better error page
 
             _context.Add(dbItem);
             await _context.SaveChangesAsync();
@@ -127,8 +136,7 @@ namespace PVK.Meetups.Web.Controllers
                 return NotFound();
             }
 
-            var meetupGroupEvent = await _context.MeetupGroupEvents
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var meetupGroupEvent = await _context.MeetupGroupEvents.FirstOrDefaultAsync(m => m.Id == id);
             if (meetupGroupEvent == null)
             {
                 return NotFound();
@@ -140,7 +148,7 @@ namespace PVK.Meetups.Web.Controllers
         // POST: MeetupGroupEvents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int owningMeetupGroupId)
         {
             if (_context.MeetupGroupEvents == null)
             {
@@ -149,7 +157,7 @@ namespace PVK.Meetups.Web.Controllers
             var meetupGroupEvent = await _context.MeetupGroupEvents.FindAsync(id);
 
             if (meetupGroupEvent == null)
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { groupId = owningMeetupGroupId });
 
 
             _context.MeetupGroupEvents.Remove(meetupGroupEvent);

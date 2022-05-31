@@ -5,7 +5,8 @@ namespace PVK.Meetups.Web.Models
 {
     public class MeetupGroupEventModel
     {
-        public int OwningMeetupGroupId { get; set; }
+        [Required]
+        public int? OwningMeetupGroupId { get; set; }
 
         public int? Id { get; set; } = null;
 
@@ -44,7 +45,7 @@ namespace PVK.Meetups.Web.Models
             return new MeetupGroupEvent
             {
                 Id = this.Id ?? 0,
-                OwningMeetupGroupId = this.OwningMeetupGroupId,
+                OwningMeetupGroupId = this.OwningMeetupGroupId ?? 0,
                 Name = this.Name,
                 Description = this.Description,
                 LocationDescription = this.LocationDescription,

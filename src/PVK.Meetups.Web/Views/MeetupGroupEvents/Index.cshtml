@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MeetupGroupEventModel>
+﻿@model MeetupGroupEventListModel
 
 @{
     ViewData["Title"] = "Index";
@@ -7,34 +7,34 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-groupId="@Model.OwningMeetupGroupId">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Events[0].Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Events[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Events[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LocationDescription)
+                @Html.DisplayNameFor(model => model.Events[0].LocationDescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDateTime)
+                @Html.DisplayNameFor(model => model.Events[0].StartDateTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDateTime)
+                @Html.DisplayNameFor(model => model.Events[0].EndDateTime)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Events) {
         <tr>
             <th>
                 @Html.DisplayFor(modelItem => item.Id)

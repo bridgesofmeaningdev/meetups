@@ -37,6 +37,8 @@
     </dl>
 </div>
 <div>
+    <a asp-controller="MeetupGroupEvents" asp-action="Create" asp-route-id="@Model?.Id">Add Events</a> |
+    <a asp-controller="MeetupGroupEvents" asp-action="Index" asp-route-id="@Model?.Id">Events</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
