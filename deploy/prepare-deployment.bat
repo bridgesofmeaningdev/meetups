@@ -7,4 +7,4 @@ REM dotnet ef migrations bundle --verbose --self-contained --force --no-build --
 dotnet ef migrations script --verbose --idempotent --no-build -o ../../deploy/dbmigrate.psql
 
 cd ../
-dotnet publish -v normal --self-contained true --runtime "ubuntu.20.04-x64" -p:PublishSingleFile=true -o ../deploy/ubuntu/
+dotnet publish -v normal --self-contained true --runtime "linux-x64" -p:PublishSingleFile=true -p:PublishTrimmed=true -o ../deploy/linux/
