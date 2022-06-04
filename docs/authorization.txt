@@ -1,5 +1,4 @@
 
-
 Hyper-V VM
 ---------------------------
 bridgesofmeaning-vm

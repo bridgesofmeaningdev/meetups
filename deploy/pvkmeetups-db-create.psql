@@ -1,0 +1,14 @@
+
+/*
+Execute as Db user: postgres
+Example: sudo -u postgres psql -d postgres -f ./pvkmeetups-db-create.psql
+*/
+-- https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql
+-- Database: PvkMeetupDb
+-- DROP DATABASE IF EXISTS "PvkMeetupDb";
+
+SELECT 'CREATE DATABASE "PvkMeetupDb" WITH OWNER = postgres TEMPLATE = template0 ENCODING = ''UTF8'' LC_COLLATE = ''C'' LC_CTYPE = ''C'' CONNECTION LIMIT = -1'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'PvkMeetupDb')\gexec
+
+
+

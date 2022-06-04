@@ -1,0 +1,106 @@
+/*
+Execute as Db User: postgres
+Example: sudo -u postgres psql -d PvkMeetupDb -f ./pvkmeetups-db-configure.psql
+*/
+
+DO
+$BODY$
+BEGIN
+
+-- Role: sapvkmeetups
+-- DROP ROLE IF EXISTS sapvkmeetups;
+
+IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'sapvkmeetups') THEN
+
+	ALTER ROLE sapvkmeetups WITH
+	  LOGIN
+	  NOSUPERUSER
+	  INHERIT
+	  NOCREATEDB
+	  NOCREATEROLE
+	  REPLICATION
+	  ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:1SUdLPA03t8Gh59cGIO7MA==$DqimpqpO8Pusa+a+R9gbFcZbdP31ngnV3vdT7xRJtSQ=:MIXvfzqD8Lh8S83FafI2lgpjBmgX52qIXBC+IyjZmpI=';
+	
+	COMMENT ON ROLE sapvkmeetups IS 'Service Account for PVK Meetups App. Full CRUD access, no DDL access';
+ELSE
+	CREATE ROLE sapvkmeetups WITH
+	  LOGIN
+	  NOSUPERUSER
+	  INHERIT
+	  NOCREATEDB
+	  NOCREATEROLE
+	  REPLICATION
+	  ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:1SUdLPA03t8Gh59cGIO7MA==$DqimpqpO8Pusa+a+R9gbFcZbdP31ngnV3vdT7xRJtSQ=:MIXvfzqD8Lh8S83FafI2lgpjBmgX52qIXBC+IyjZmpI=';
+	
+	COMMENT ON ROLE sapvkmeetups IS 'Service Account for PVK Meetups App. Full CRUD access, no DDL access';
+END IF;
+
+-- Role: sapvkmigrations
+--DROP ROLE IF EXISTS sapvkmigrations;
+
+IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'sapvkmigrations') THEN
+	ALTER ROLE sapvkmigrations WITH
+	  LOGIN
+	  NOSUPERUSER
+	  INHERIT
+	  NOCREATEDB
+	  NOCREATEROLE
+	  REPLICATION
+	  ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:rVwcyfLDsznQvznXFLNSAg==$Wx+wKtD8Xvc3ZVtS7uAKBMdWjBtOBhTw3SACJXzYvE0=:iToStqaHdez53Z89PU5N3AstjGpWnWUHC6PAnaNIT4g=';
+	
+	COMMENT ON ROLE sapvkmigrations IS 'EntityFramework Core user for managing migrations on the database. Full DDL and DML access.';
+
+ELSE
+	CREATE ROLE sapvkmigrations WITH
+	  LOGIN
+	  NOSUPERUSER
+	  INHERIT
+	  NOCREATEDB
+	  NOCREATEROLE
+	  REPLICATION
+	  ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:rVwcyfLDsznQvznXFLNSAg==$Wx+wKtD8Xvc3ZVtS7uAKBMdWjBtOBhTw3SACJXzYvE0=:iToStqaHdez53Z89PU5N3AstjGpWnWUHC6PAnaNIT4g=';
+	
+	COMMENT ON ROLE sapvkmigrations IS 'EntityFramework Core user for managing migrations on the database. Full DDL and DML access.';
+END IF;
+
+
+GRANT ALL ON DATABASE "PvkMeetupDb" TO sapvkmigrations;
+GRANT TEMPORARY, CONNECT ON DATABASE "PvkMeetupDb" TO sapvkmeetups;
+
+-- setup sapvkmeetups to have CRUD access to everything created bt the migrations account
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT ALL ON SEQUENCES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT EXECUTE ON FUNCTIONS TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT USAGE ON TYPES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE sapvkmigrations
+GRANT USAGE ON SCHEMAS TO sapvkmeetups;
+
+---
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT ALL ON SEQUENCES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT EXECUTE ON FUNCTIONS TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT USAGE ON TYPES TO sapvkmeetups;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT USAGE ON SCHEMAS TO sapvkmeetups;
+
+
+END;
+$BODY$ LANGUAGE plpgsql
